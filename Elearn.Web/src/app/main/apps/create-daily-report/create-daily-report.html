@@ -1,0 +1,560 @@
+﻿<div id="content" class="container-fluid">
+<p class="content-header" style="padding: 0px;margin-left: 14px;">{{context}} Daily Report</p>
+<!--breadcrumb-->
+<!--<nav aria-label="breadcrumb" role="navigation">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="#">
+        <a ui-sref="app.home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
+      </a>
+    </li>
+    <li class="breadcrumb-item"><a href="#">Daily Report</a></li>
+    <li class="breadcrumb-item">New Daily Reportt</li>
+  </ol>
+</nav>-->
+<div class="col-md-12 create-daily-report">
+<div class="col-md-9">
+<div class="tab-content tab-create-daily-report-content">
+<div role="tabpanel" class="tab-pane active" id="TabProblemIntrumentation">
+<form id="frmProblemIntrumentation">
+
+<div class="col-md-12">
+  <div class="setting_heading cf">
+    <div class="left">
+      <h3>Instrumentation</h3>
+    </div>
+  </div>
+</div>
+
+<div class="form-group required">
+  <div class="col-md-6">
+    <label class="control-label">Start date</label>
+    <div>
+      <input name="startDate"
+             id="startDate"
+             kendo-date-picker
+             data-required-tag-msg
+                         ng-model="problemIntrumentation.startDate"
+             style="width: 100%"
+             ng-disabled="isView"
+            />
+      <span class="k-invalid-msg" data-for="startDate"></span>
+
+
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <label class="control-label">End date</label>
+    <div>
+      <input name="endDate"
+             id="endDate"
+                         style="width: 100%"
+             kendo-date-picker
+             ng-disabled="isView"
+             data-required-tag-msg
+             ng-model="problemIntrumentation.endDate"
+             data-greaterdate-msg
+             data-greaterdate-field="startDate" />
+      <span class="k-invalid-msg" data-for="endDate"></span>
+
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+
+<div class="form-group">
+  <div class="col-md-6">
+    <label>PTW#</label>
+    <input name="ptw" type="text"
+           class="form-control"
+           kendo-text-box
+           ng-model="problemIntrumentation.ptw"
+           ng-disabled="isView" />
+    <span class="k-invalid-msg" data-for="ptw"></span>
+  </div>
+  <div class="col-md-6">
+    <label>WO#</label>
+    <input name="wo" type="text"
+           class="form-control"
+           kendo-text-box
+           ng-model="problemIntrumentation.wo"
+           ng-disabled="isView" />
+    <span class="k-invalid-msg" data-for="wo"></span>
+
+  </div>
+  <div class="clear"></div>
+</div>
+<div class="form-group">
+  <hr />
+</div>
+<div class="form-group required">
+  <div class="col-md-6">
+    <label class="control-label">Area</label>
+    <select class="form-control"
+            id="cboArea"
+            name="cboArea"
+            kendo-drop-down-list="areaDdl"
+            ng-model="problemIntrumentation.areaId"
+            k-options="areaOptions"
+            k-option-label="'Please Select'"
+            data-required-msg
+            ng-disabled="isView"></select>
+
+    <!--// k-options="areaOptions"-->
+    <span class="k-invalid-msg" data-for="cboArea"></span>
+  </div>
+  <div class="col-md-6">
+    <label class="control-label">Unit</label>
+    <select class="form-control"
+            id="cboUnit"
+            name="cboUnit"
+            kendo-drop-down-list="unitDdl"
+            k-options="unitOptions"
+            ng-model="problemIntrumentation.unitId"
+            k-option-label="'Please Select'"
+            data-required-msg             
+            ng-disabled="isView"></select>
+    <span class="k-invalid-msg" data-for="cboUnit"></span>
+      
+    <!--k-options="unitOptions"-->
+  </div>
+  <div class="clear"></div>
+</div>
+<div class="form-group required">
+  <div class="col-md-6">
+    <label class="control-label">Tag No</label>
+    <input id="tagNo"
+           name="tagNo"
+           type="text"
+           class="form-control"
+           kendo-auto-complete
+           data-required-tag-msg
+           ng-model="problemIntrumentation.tagNo"
+           k-options="problemAutoCompTagNo"
+           ng-disabled="isView" />
+    <span class="k-invalid-msg" data-for="tagNo"></span>
+
+  </div>
+  <div class="col-md-6">
+    <label class="control-label">ECA Rating</label>
+    <input type="text"
+           class="form-control"
+           kendo-text-box
+           ng-model="problemIntrumentation.ecaRating"
+           readonly />
+  </div>
+  <div class="clear"></div>
+</div>
+<div class="form-group required">
+  <div class="col-md-6">
+    <label class="control-label">P&ID</label>
+    <input type="text"
+           class="form-control"
+           kendo-text-box
+           ng-model="problemIntrumentation.pid"
+           readonly />
+  </div>
+  <div class="col-md-6">
+    <label class="control-label">MPlan</label>
+    <input type="text"
+           class="form-control"
+           kendo-text-box
+           ng-model="problemIntrumentation.mplan"
+           readonly />
+  </div>
+  <div class="clear"></div>
+</div>
+<div class="form-group">
+  <div class="col-md-12">
+    <label>Description</label>
+    <textarea class="form-control"
+                          rows="5"
+                          ng-disabled="isView"
+                          ng-model="problemIntrumentation.description"></textarea>
+  </div>
+  <div class="clear"></div>
+</div>
+<div class="form-group">
+  <hr />
+</div>
+
+<div class="form-group required">
+  <div class="col-md-6">
+    <label class="control-label">Group</label>
+
+    <select class="form-control"
+            name="cboGroup"
+            id="cboGroup"
+            kendo-drop-down-list="groupDdl"
+            k-options="groupOptions"
+            ng-model="problemIntrumentation.instrumentationGroupId"
+            k-option-label="'Please Select'"
+            data-required-msg      
+            ng-disabled="isView"></select>
+    <span class="k-invalid-msg" data-for="cboGroup"></span>
+  </div>
+  <div class="col-md-6">
+    <label class="control-label">Type</label>
+
+    <select class="form-control"
+            kendo-drop-down-list="typeDdl"
+            name="cboType"
+            id="cboType"
+            k-options="typeOptions"
+            k-option-label="'Please Select'"
+            data-required-msg      
+            ng-model="problemIntrumentation.instrumentationTypeId"
+            ng-disabled="isView"></select>
+  </div>
+  <div class="clear"></div>
+</div>
+
+<div class="form-group">
+  <div class="col-md-6">
+    <label>Brand</label>
+
+    <select class="form-control"
+            kendo-drop-down-list="brandDdl"
+            name="cboBrand"
+            id="cboBrand"
+            k-options="brandOptions"
+            k-option-label="'Please Select'"
+            ng-model="problemIntrumentation.brandId"
+            ng-disabled="isView"></select>
+  </div>
+  <div class="col-md-6">
+    <label>Manufacturer</label>
+
+    <select class="form-control"
+            kendo-drop-down-list="brandTypeDdl"
+            name="cboBrandType"
+            id="cboBrandType"
+            k-options="brandTypeOptions"
+            k-option-label="'Please Select'"
+            k-select="brandTypeOnChange"
+            ng-model="problemIntrumentation.brandTypeId"
+            ng-disabled="isView"></select>
+  </div>
+  <div class="clear"></div>
+</div>
+<div class="form-group required">
+  <div>
+    <div class="col-md-6">
+      <label class="control-label">Work Type</label>
+
+      <select class="form-control"
+              kendo-drop-down-list="workTypeDdl"
+              name="cboWorkType"
+              id="cboWorkType"
+              k-option-label="'Please Select'"
+              k-options="workTypeOptions"
+              ng-model="problemIntrumentation.workTypeId"
+              data-required-msg      
+              ng-disabled="isView"></select>
+
+
+      <span class="k-invalid-msg" data-for="cboWorkType"></span>
+    </div>
+    <div class="col-md-6" ng-show="canShowOtherBrand">
+      <label>Other Brand</label>
+      <input type="text"
+             class="form-control"
+             kendo-text-box
+             ng-disabled="isView"
+             ng-model="problemIntrumentation.otherBrandType" />
+
+    </div>
+  </div>
+  <div style="height:20px"></div>
+  <div class="col-md-12">
+    <label style="margin-top:10px">Problem Description (As Found)</label>
+    <textarea class="form-control"
+                          rows="5"
+                          ng-disabled="isView"
+                          ng-model="problemIntrumentation.problemDescription"></textarea>
+
+  </div>
+
+  <div class="clear"></div>
+</div>
+<div class="form-group">
+  <hr />
+</div>
+</form>
+</div>
+
+<div role="tabpanel" class="tab-pane" id="TabAction">
+  <form id="frmAction">
+    <div class="col-md-12">
+      <div class="setting_heading cf">
+        <div class="left">
+          <h3>Action</h3>
+        </div>
+      </div>
+    </div>
+    <div class="form-group required">
+      <div class="col-md-6">
+        <label class="control-label">Failure Type</label>
+
+        <select class="form-control"
+                name="cboFailureType"
+                id="cboFailureType"
+                kendo-drop-down-list="ddlFailureType"
+                ng-model="action.falureTypeId"
+                k-option-label="'Please Select'"
+                k-options="failureTypeOptions"
+                data-required-msg
+                ng-disabled="isView"></select>
+
+        <span class="k-invalid-msg" data-for="cboFailureType"></span>
+
+      </div>
+      <div class="col-md-6">
+        <label>Failure Sub-Type<span>(Optional if Failure Type is PM)</span></label>
+
+        <select class="form-control"
+                kendo-drop-down-list="ddlFailureSubType"
+                id="cboFailureSubType"
+                name="cboFailureSubType"
+                data-required-failuresubtype-msg
+                k-options="failureSubTypeOptions"
+                ng-model="action.falueSubTypeId"
+                k-option-label="'Please Select'"
+                ng-disabled="isView"></select>
+
+        <span id='spFailureSubType' class="k-invalid-msg" data-for="cboFailureSubType"></span>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="form-group required">
+      <div class="col-md-6">
+        <label class="control-label">Work Completion</label>
+        <label class="radio-inline" ng-repeat="work in action.workCompletions">
+          <input type="radio"
+                 name="optradio"
+                 id="optradio"
+                 ng-model="action.workCompletionId"
+                 required
+                 ng-click="workCompletionChange($event)"
+                 ng-disabled="isView"
+                 ng-value="work.id">{{work.name}}
+        </label>
+        <span class="k-invalid-msg" data-for="optradio"></span>
+
+      </div>
+      <div class="col-md-6">
+        <label>Constraint<span> (Mandatory if Work Completion Status is In-Progress)</span></label>
+
+        <select class="form-control"
+                kendo-drop-down-list="ddlConstraint"
+                id="cboConstraint"
+                name="cboConstraint"
+                k-options="constraintsOptions"
+                data-required-constraint-msg
+                ng-model="action.constraintId"
+                k-option-label="'Please Select'"
+                ng-disabled="isView || isConstraintView"></select>
+
+        <span class="k-invalid-msg" data-for="cboConstraint"></span>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="form-group required">
+      <div class="col-md-12">
+        <label class="control-label">Replacement Done</label>
+        <textarea class="form-control"
+                          name="replacementArea"
+                          id="replacementArea"
+                          rows="5"
+                          ng-disabled="isView"
+                          data-required-msg
+                          ng-model="action.replacement"></textarea>
+        <span class="k-invalid-msg" data-for="replacementArea"></span>
+      </div>
+      <div class="clear"></div>
+    </div>
+
+    <div class="form-group required">
+      <div class="col-md-12">
+        <label class="control-label">As Left</label>
+        <textarea class="form-control"
+                          rows="5"
+                          data-required-msg
+                          ng-disabled="isView"
+                          ng-model="action.asLeft"></textarea>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </form>
+</div>
+
+<div role="tabpanel" class="tab-pane" id="TabAttachment">
+
+  <div class="col-md-12">
+    <div class="setting_heading cf">
+      <div class="left">
+        <h3>Attachment</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="form-group">
+      <button type="button" class="btn btn-new-attachment" data-toggle="modal" data-target="#attachmentPopup" ng-hide="isView">New Attachment</button>
+    </div>
+
+    <div kendo-grid="grid" id="gdAttachment" class="grid" options="mainGridOptions"></div>
+
+
+    <div id="attachmentPopup" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Upload File</h4>
+          </div>
+          <div class="modal-body">
+            <form id="frmAttachmentPopup">
+              <div class="md-dialog-content">
+                <div class="form-group">
+                  <input name="txtFileUpdate"
+                         id="txtFileUpdate"
+                         type="file"
+                         kendo-upload
+                         k-validation="{allowedExtensions:['.xlsx','.xls','.csv','.xml','.jpg','.png','.gif','.svg','.vsd','.zip','.7z','.avi','.doc','.docx','.html','.htm','.ico','.ics','.json','.mpeg','.odp','.ods','.odt','.pdf','.ppt','.pptx','.rar','.rtf'],maxFileSize: 10485760}"
+                         k-multiple="false" />
+                </div>
+
+                <div class="form-group">
+                  <label>Remarks<span>(Optional)</span></label>
+
+                  <textarea id="txtRemarks"
+                                    name="txtRemarks"
+                                    class="form-control"
+                                    rows="5"
+                                    ng-model="attachment.Remark"
+                                    ng-hide="isView"></textarea>
+                  <span class="k-invalid-msg" data-for="txtRemarks"></span>
+
+                </div>
+                <div class="form-group">
+                  <!-- <label><span>Allow extensions: .xlsx, .xls, .csv, .xml, .jpg, .png, .gif</span></label> -->
+                  <label><span>Maximun size per file: 10mb</span></label>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="doSubmit('Cancel')">Cancel</button>
+            <button type="button" class="btn btn-default" ng-click="doSubmit('Submit')">Submit</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <div class="clear"></div>
+
+</div>
+
+</div>
+</div>
+<div class="col-md-3">
+  <div id="tab-create-daily-report-nav" class="horizontal-scrollable-tabs">
+    <div class="horizontal-tabs">
+      <div class="tablist-title">
+        Form check list
+      </div>
+      <div class="line-border"></div>
+      <ul role="tablist" class="nav nav-tabs nav-tabs-horizontal">
+        <li role="presentation" id="problemintrumentation-item" title="ProblemIntrumentation" ng-click="activateTab('ProblemIntrumentation',false)" class="active">
+          <a data-toggle="tab"><i class="fa fa-circle" aria-hidden="true"></i>Instrumentation</a>
+        </li>
+        <li role="presentation" id="action-item" title="Action" ng-click="activateTab('Action',false)">
+          <a data-toggle="tab"><i class="fa fa-circle" aria-hidden="true"></i>Action</a>
+        </li>
+        <li role="presentation" id="attachment-item" title="Attachment" ng-click="activateTab('Attachment',false)">
+          <a data-toggle="tab"><i class="fa fa-circle" aria-hidden="true"></i>Attachment(Optional)</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="create-report-footer">
+  <div class="group-action">
+    <div class="pull-right">
+      <button type="button" class="btn" ng-show="canDelete" ng-click="goToDelete()">Delete</button>
+      <button type="button" class="btn" ng-click="onDiscard()" ng-show="canDiscard">Discard</button>
+      <button type="button" class="btn" ng-click="goToCancel()" ng-show="canCancel">Cancel</button>
+      <button type="button" class="btn" ng-click="goToSaveDraft();" ng-show="canDraft">Save as Draft</button>
+      <button type="button" class="btn" ng-click="goTo('submit');" ng-show="canSubmit">Submit</button>
+      <button type="button" class="btn" ng-show="canUpdate" ng-click="doUpdate()">Update</button>
+      <button type="button" class="btn" ng-show="canSave" ng-click="goToSave()">Save</button>
+      <button type="button" class="btn" ng-click="goTo('acknowledged');" ng-show="canAcknowledged">Acknowledged</button>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+</div>
+</div>
+<div id="errorSubmit" class="modal fade modal-md" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Submit Warning</h4>
+      </div>
+
+      <div class="modal-body">
+        <div ng-repeat="error in errors">
+          <span style="font-weight:bold">{{error.tab}} Mandatory Fields:</span>
+          <div style="margin-left:10px" ng-repeat="item in error.errors">
+            <span style="font-weight:400">{{item.field}}: </span>
+            <span>{{item.error}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="text-align:center">
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="width: 75px">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="position: absolute;bottom: 79px;left: 5px;font-size: 15px;font-style: italic;">
+  <span style="display: inline-block">{{saveOn}} {{saveBy}}</span>
+</div>
+<div id="messageOneDetail" class="modal fade modal-md" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Warning</h4>
+      </div>
+
+      <div class="modal-body">
+        <p>Data of current Report may be lost. Do you still want to discard this Report?
+        </p>
+      </div>
+      <div class="modal-footer" style="text-align:center">
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="width: 75px">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="width: 75px" ng-click="onConfirmMessageOne($event)">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  #create-report-footer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    left: 0px;
+  }
+
+  md-footer {
+    display: none;
+  }
+</style>

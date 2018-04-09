@@ -1,0 +1,78 @@
+﻿<p>Instrument Detail Report</p>
+<fieldset class="search-border">
+  <legend class="search-border">Search Criteria</legend>
+  <form ng-submit="Search()">
+    <div class="form-group row">
+      <label for="searchUser" class="col-sm-2 col-form-label">Create By</label>
+      <div class="col-sm-4">
+        <input type="text"
+               class="form-control"
+               kendo-auto-complete
+               ng-model="createBy"
+               k-options="searhAutoCompUser"
+               id="searchUser" />
+      </div>
+      <label class="col-sm-2 col-form-label">Area</label>
+      <div class="col-sm-4">
+        <select class="form-control"
+                ng-model="areaId">
+          <option value="">-- Select --</option>
+          <option ng-repeat="area in areas"
+                  value="{{area.id}}" ng-selected="{{area.id == areaId}}">
+            {{area.name}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Report Status</label>
+      <div class="col-sm-4">
+        <select class="form-control"
+                ng-model="statusId">
+          <option value="">-- Select --</option>
+          <option ng-repeat="option in status"
+                  value="{{option.id}}" ng-selected="{{option.id ==statusId}}">
+            {{option.name}}
+          </option>
+        </select>
+      </div>
+      <label class="col-sm-2 col-form-label">Report Period</label>
+      <div class="col-sm-2">
+        <input style="width: 100%"  kendo-date-picker placeholder="Start date ..."
+               ng-model="startDate" />
+       
+      </div>
+      <div class="col-sm-2">
+        <input style="width: 100%" kendo-date-picker placeholder="End date ..."
+               ng-model="endDate" />
+      </div>
+    </div>
+    <div class="form-group row">
+      <button type="submit" class="search-border btn btn-success">Search</button>
+    </div>
+  </form>
+</fieldset>
+<div kendo-grid="grid" id="search-grid" options="mainGridOptions"></div>
+<ul id="home-context-menu">
+  
+</ul>
+<style>
+  fieldset.search-border {
+    padding: 0 1.4em 0em 1.4em !important;
+    margin: 0px 10px 0px 10px !important;
+  }
+
+  p {
+    margin-left: 10px;
+    font-weight: 500;
+    font-size: 20px;
+  }
+  #search-grid {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+  }
+  #search-grid .k-grid-header th {
+    background: #e4e1e1;
+  }
+</style>

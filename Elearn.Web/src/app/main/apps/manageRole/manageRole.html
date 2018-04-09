@@ -1,0 +1,79 @@
+﻿<div id="content" class="container-fluid">
+  <!--breadcrumb-->
+  <nav aria-label="breadcrumb" role="navigation">
+    <ol class="admin-role breadcrumb">
+      <li class="breadcrumb-item"><a href="#">
+          <a ui-sref="app.home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
+        </a>
+      </li>
+      <li class="breadcrumb-item"><a href="javascript:void(0)" ng-click="vm.gotoAllTab($event)">Administrator - User Role</a></li>
+    </ol>
+  </nav>
+  <div class="home-search">
+    <button type="button" style="margin-bottom:20px" ng-click="showDialog()" class="btn btn-default btn-custom-lg">CREATE NEW ROLE</button>
+    <div class="search_head right" style="padding: 0px;width:400px">
+      <form ng-submit="Search()">
+        <input type="text" class="grid_search form-control" placeholder="Search user by staff name, username, userrole" ng-model="Keyword" />
+        <button type="submit" style="top: 1px;">
+          <i class="icon-search"></i>
+        </button>
+      </form>
+    </div>
+    <div class="clear-report"></div>
+    <ul id="home" class="nav nav-tabs">
+      <li class="active"><a ui-sref-active="active" ng-click="vm.tabChange($event,'All')">All ({{total}})</a></li>
+      <li><a ui-sref-active="active" ng-click="vm.tabChange($event,'Technician')">Technician ({{TotalTechnician}})</a></li>
+      <li><a ui-sref-active="active" ng-click="vm.tabChange($event,'Engineer')">Engineer ({{TotalEngineer}})</a></li>
+      <li><a ui-sref-active="active" ng-click="vm.tabChange($event,'Manager')">Manager ({{TotalManager}})</a></li>
+      <li><a ui-sref-active="active" ng-click="vm.tabChange($event,'Guest')">Guest ({{TotalGuest}})</a></li>
+      <li><a ui-sref-active="active" ng-click="vm.tabChange($event,'Admin')">Admin ({{TotalAdmin}})</a></li>
+    </ul>
+    <div class="tab-content" ui-view="subContent">
+
+    </div>
+  </div> 
+</div>
+<div class="modal" id="report-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-show="Dialog" ng-style="Dialog?{'display':'block'}:{}">
+  <div class="modal-dialog" role="document">
+    <form ng-submit="submit()" id="create-update-form">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"  ng-click="hideDialog()">&times;</button>
+        <h4 class="modal-title">Add New Role</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="username">User name</label>
+          <input data-required-msg data-username-msg
+                 class="form-control"
+                 kendo-auto-complete
+                 k-ng-model="userAccount"
+                 k-options="searhAutoCompUser"
+                 id="username" 
+                 name="userName"/>
+          <span class="k-invalid-msg" data-for="username"></span>
+        </div>
+        <div class="form-group" style="margin-top:35px">
+          <label for="userrole">User role</label>
+          <select id="userrole" 
+                  name="userrole"
+                  data-userrole-msg
+                  class="multiselect" 
+                  multiple="multiple" 
+                  kendo-multi-select 
+                  k-data-source="vm.LstUserRoles" 
+                  k-ng-model="vm.LstSelectedUserRoles"
+                  k-value-primitive="true" 
+                  k-data-text-field="'name'" 
+                  k-data-value-field="'id'" ></select>
+          <span class="k-invalid-msg" data-for="userrole"></span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="hideDialog()">Cancel</button>
+        <button type="submit" class="btn btn-default">Save</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>

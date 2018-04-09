@@ -1,0 +1,194 @@
+<!--<div id="login" layout="column" layout-align="space-between center" style="height:100%">
+  <div class="background-layer"></div>
+  <div layout="column" style="width:100%; align-items:center; justify-content:center; margin:auto;">
+    <div class="login-header">
+      <img class="login-logo" src="assets/images/logos/petronas-full.JPG">
+    </div>
+    <div class="login-body" layout="column">
+      <div class="login-title">Instrument Report</div>
+      <form name="loginForm" class="login-form" layout="column">
+        <div class="login-form-content">
+          <div class="divider">
+            <md-input-container class="login-domain" md-no-float>
+              <md-select name="domain" ng-model="vm.selectedDomain" placeholder="Domain" required>
+                <md-option ng-repeat="domain in vm.domains" value="{{domain.name}}" ng-selected="domain.id === 1">
+                  {{domain.name}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div class="divider">
+            <md-input-container class="login-id" md-no-float>
+              <input type="text" name="userId" ng-model="vm.form.userId" placeholder="Enterprise ID (e.g. mohdali.abdullah)" required>
+            </md-input-container>
+          </div>
+          <div>
+            <md-input-container class="login-password" md-no-float>
+              <input type="password" name="password" ng-model="vm.form.password" placeholder="Password" required>
+            </md-input-container>
+          </div>
+        </div>
+        <div class="login-invalid" ng-if="!vm.isValid">
+          <md-icon md-font-icon="icon-alert" class="material-icons"></md-icon>
+          <div>Invalid enterprise ID or password</div>
+        </div>
+        <md-button type="submit" ng-hide="vm.loading" name="login" ng-click="vm.login($event); vm.isValid=true" class="button-violet login-button"
+                   aria-label="LOG IN" ng-disabled="loginForm.$invalid || loginForm.$pristine">
+          LOGIN
+        </md-button>
+        <md-progress-circular class="login-loading" md-mode="indeterminate" ng-show="vm.loading"></md-progress-circular>
+      </form>
+    </div>
+  </div>
+  <div class="login-footer" layout="column">
+    <div class="login-service-desk" layout-gt-xs="row" layout-xs="column">
+      <div>Service Desk:</div>
+      <div layout-gt-xs="row" layout-xs="column" layout-align="center center">
+        <a href="tel:+60323313333">
+          <md-icon md-font-icon="icon-phone" class="material-icons"></md-icon>+603 2331 3333
+        </a>
+        <a href="mailto:ict.servicedesk@petronas.com">
+          <md-icon md-font-icon="icon-email" class="material-icons"></md-icon> ict.servicedesk@petronas.com
+        </a>
+      </div>
+    </div>
+    <div class="tnc" layout="row" layout-align="center center">
+      <a href="http://pww.petronas.com.my/Pages/Privacy%20Policy.aspx" target="_blank">Privacy Policy</a> &nbsp;|&nbsp;
+      <a ui-sref="app.pages_about_tnc" target="_blank">Use Terms &amp; Conditions</a>
+    </div>
+  </div>
+</div>-->
+
+<div id="login" style="display: flex">
+  <div class="background-layer"></div>
+  <div class="login-wrapper">
+    <div class="header">
+      <img class="logo" src="http://design.petronas.com/images/brand/logo/petronas_logo_144.png" />
+      <div class="app-name">Continue to Daily Report</div>
+    </div>
+    <form name="loginForm" class="login-form" layout="column">
+    <div class="body">
+      <div class="field">
+        <div class="domain-container">
+          <select class="domain" ng-disabled="vm.loading" ng-model="vm.selectedDomain" ng-options="x.name for x in vm.domains"></select>
+          <i class="material-icons">domain</i>
+        </div>
+        <div class="enterprise-id-container">
+          <input class="enterprise-id" ng-disabled="vm.loading" ng-model="vm.form.userId" placeholder="Enterprise ID (e.g. mohdali.abdullah)" oninput="disableButton()" />
+          <i class="material-icons">account_box</i>
+        </div>
+        <div class="password-container">
+          <input class="password" type="password" ng-disabled="vm.loading" ng-model="vm.form.password" placeholder="Password" oninput="disableButton()" />
+          <i class="material-icons">lock</i>
+          <i class="peek material-icons">visibility</i>
+        </div>
+      </div>
+      <div class="error-message" ng-if="!vm.isValid">
+        <i class="material-icons">error</i>Login failed, please check your info and try again
+      </div>
+      <button type="submit" class="login-button button-full primary-button" ng-disabled="loginForm.$invalid || loginForm.$pristine" name="login" ng-click="vm.login($event); vm.isValid=true">
+        <span class="login" ng-hide="vm.loading">Log In</span>
+        <span class="loading" ng-show="vm.loading">
+          <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+               width="24px" height="40px" viewBox="0 0 24 30" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+            <rect x="0" y="13" width="4" height="5" fill="#fff">
+              <animate attributeName="height" attributeType="XML" values="5;21;5" begin="0s" dur="0.6s" repeatCount="indefinite"></animate>
+              <animate attributeName="y" attributeType="XML" values="13;5;13" begin="0s" dur="0.6s" repeatCount="indefinite"></animate>
+            </rect>
+            <rect x="10" y="13" width="4" height="5" fill="#fff">
+              <animate attributeName="height" attributeType="XML" values="5;21;5" begin="0.15s" dur="0.6s" repeatCount="indefinite"></animate>
+              <animate attributeName="y" attributeType="XML" values="13;5;13" begin="0.15s" dur="0.6s" repeatCount="indefinite"></animate>
+            </rect>
+            <rect x="20" y="13" width="4" height="5" fill="#fff">
+              <animate attributeName="height" attributeType="XML" values="5;21;5" begin="0.3s" dur="0.6s" repeatCount="indefinite"></animate>
+              <animate attributeName="y" attributeType="XML" values="13;5;13" begin="0.3s" dur="0.6s" repeatCount="indefinite"></animate>
+            </rect>
+          </svg>
+        </span>
+      </button>
+    </div>
+      </form>
+      <div class="footer-login">
+        <a>Need Help?</a>
+      </div>
+</div>
+</div>
+
+<script>
+  var domain = document.getElementsByClassName("domain");
+  var id = document.getElementsByClassName("enterprise-id");
+  var pass = document.getElementsByClassName("password");
+  var loginButton = document.getElementsByClassName("login-button");
+  function disableButton() {
+    if (id[0].value == "" || pass[0].value == "") {
+      loginButton[0].disabled = true;
+    } else {
+      loginButton[0].disabled = false;
+    }
+  }
+  $(document).ready(function () {
+    disableButton();
+    $('.login-button').click(function (e) {
+      var $this = $(this);
+      var $offset = $this.offset();
+      var r = Math.max($(this).outerWidth(), $(this).outerHeight());
+      var x = e.pageX - $(this).offset().left - r / 2;
+      var y = e.pageY - $(this).offset().top - r / 2;
+
+      if ($(this).find(".button-ripple").length === 0)
+        $(this).prepend("<span class=\"button-ripple\"></span>");
+      $(".button-ripple").css({
+        width: r + 'px',
+        height: r + 'px',
+        top: y + 'px',
+        left: x + 'px'
+      });
+      //$this.addClass('is-active');
+
+      //domain[0].disabled = true;
+      //id[0].disabled = true;
+      //pass[0].disabled = true;
+      //$(".error-message").css({
+      //  "opacity": ""
+      //})
+      //$(".login-button .login").css({
+      //  "display": "none"
+      //})
+      //$(".login-button .loading").css({
+      //  "display": "block"
+      //})
+      //setTimeout(function () {
+      //  domain[0].disabled = false;
+      //  id[0].disabled = false;
+      //  pass[0].disabled = false;
+      //  $(".error-message").css({
+      //    "opacity": "1"
+      //  })
+      //  $(".login-button .login").css({
+      //    "display": "block"
+      //  })
+      //  $(".login-button .loading").css({
+      //    "display": "none"
+      //  })
+      //}, 3000)
+    });
+    $('.login-button').on('animationend webkitAnimationEnd oanimationend MSAnimationEnd', function (e) {
+      $(this).removeClass('is-active');
+      $(".button-ripple").remove();
+    });
+  });
+
+
+</script>
+<style>
+  #content {
+    height: 100%;
+  }
+  #main {
+    height: 100%;
+  }
+  body {
+    height: 100%;
+    padding: 0px;
+  }
+</style>

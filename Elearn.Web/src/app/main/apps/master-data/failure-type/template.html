@@ -1,0 +1,97 @@
+﻿<div class="col-sm-5">
+  <div kendo-tree-view="treeView" 
+       id="treeData" 
+       k-options="treeViewOptions">
+  </div>
+  <ul id="tree-context-menu">
+    <li id="create-menu">Create</li>
+    <li id="edit-menu">Edit</li>
+    <li id="delete-menu">Delete</li>
+  </ul>
+</div>
+<div class="col-sm-7">
+
+  {{tabName}}
+
+</div>
+
+<div id="dataPopup" class="modal fade" role="dialog" data-val="" >
+  <form id="reportPopup" ng-submit="doSubmit()">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{{actionName}} Failure Type</h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="md-dialog-content">
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text"
+                     id="workType"
+                     name="workType"
+                     data-required-msg
+                     class="form-control"
+                     kendo-text-box
+                     ng-model="newWorkType" />
+              <span class="k-invalid-msg" data-for="workType"></span>
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <input type="text"
+                     id="description"
+                     name="description"
+                     data-required-msg
+                     class="form-control"
+                     kendo-text-box
+                     ng-model="descripion" />
+              <span class="k-invalid-msg" data-for="description"></span>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>
+<style>
+.rootfolder { background-position: 0 0; }
+.folder     { background-position: 0 -16px; }
+.pdf        { background-position: 0 -32px; }
+.html       { background-position: 0 -48px; }
+.image      { background-position: 0 -64px; }
+
+#treeview .k-sprite {
+background-image: url("../content/web/treeview/coloricons-sprite.png");
+}
+
+fa.k-sprite,
+.fa.k-sprite::before {
+font-size: 12px;
+line-height: 12px;
+}
+ 
+.fa.k-sprite, .fa.k-sprite::before {
+font-size: 16px;
+line-height: 16px;
+padding-right: 3px;
+}
+  
+.k-icon.k-sprite, .k-icon.k-sprite::before {
+font-size: 16px;
+line-height: 16px;
+padding-right: 3px;
+}
+  
+.glyphicon.k-sprite, .glyphicon.k-sprite::before {
+font-size: 16px;
+line-height: 16px;
+padding-right: 3px;
+}
+</style>

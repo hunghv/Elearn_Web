@@ -1,0 +1,89 @@
+
+<div role="tabpanel" class="tab-pane active" id="Tab1">
+    <div class="col-md-12">
+        <div class="setting_heading cf">
+            <div class="left">
+                <h3>Action</h3>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-6">
+            <label>Failure Type</label>
+
+            <select class="form-control"
+                    ng-model="vm.action.falureTypeId"
+                    ng-options="item.name for item in vm.action.failureTypes track by item.id"></select>
+        </div>
+        <div class="col-md-6">
+            <label>Failure Sub-Type<span>(Optional if Failure Type is PM)</span></label>
+
+            <select class="form-control"
+                    ng-model="vm.action.falueSubTypeId"
+                    ng-options="item.name for item in vm.action.failureSubTypes track by item.id"></select>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-12">
+            <label>Acion Done</label>
+            <textarea class="form-control"
+                      rows="5"
+                      kendo-editor
+                      ng-model="vm.action.actionDone"></textarea>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-12">
+            <label>Replacement</label>
+            <textarea class="form-control"
+                      rows="5"
+                      kendo-editor
+                      ng-model="vm.action.replacement"></textarea>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-12">
+            <label>As Left</label>
+            <textarea class="form-control"
+                      rows="5"
+                      kendo-editor
+                      ng-model="vm.action.asLeft"></textarea>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-6">
+            <label>Word Completion</label>
+
+            <select class="form-control"
+                    ng-model="vm.action.workCompletionId"
+                    ng-options="item.name for item in vm.action.workCompletions track by item.id"></select>
+        </div>
+        <div class="col-md-6">
+            <label>Constraint<span>(Mandatory if Work Completion Status is In-Progress)</span></label>
+
+            <select class="form-control"
+                    ng-model="vm.action.constraintId"
+                    ng-options="item.name for item in vm.action.constraints track by item.id"></select> 
+
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-12">
+            <textarea class="form-control"
+                      rows="5"
+                      kendo-editor
+                      ng-model="vm.action.Remark"></textarea>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

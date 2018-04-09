@@ -1,0 +1,130 @@
+﻿/*Override Bootstrap*/
+.navbar {
+  height: 69px;
+}
+.navbar-inverse{
+  background-color: #3d3c38;
+  border: 1px solid #33322e;
+}
+.navbar-inverse .navbar-text {
+  color: #ffffff;
+  /*font-family: "museo_sans";*/
+  font-weight: 700;
+  font-size: 22px;
+  margin-top: 18px;
+}
+
+@media (min-width: 768px)
+{
+  .navbar-text {
+    margin-left: 20px;
+  }
+}
+@media (min-width: 991px)
+{
+  .navbar-nav {
+    margin-left: 50px;
+  }
+}
+.navbar-inverse .navbar-nav > li > a {
+  color: #d2d2d2;
+  line-height: 68px;
+  height: 68px;
+  padding-top: 0;
+  /*font-family: "museo_sans";*/
+  font-weight: 300;
+}
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+  color: #d2d2d2;
+  /*font-family: "museo_sans";*/
+  font-weight: 300;
+  background-color: #2d2926;
+  font-size: 14px;
+}
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+  color: #d2d2d2;
+  /*font-family: "museo_sans";*/
+  font-weight: 300;
+  background-color: #2d2926;
+}
+.navbar-nav > li > .dropdown-menu {
+  background-color: #393631;
+}
+.dropdown-menu > li > a {
+  color: #d2d2d2;
+}
+.dropdown-menu .divider {
+  height: 1px;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.breadcrumb > li + li:before {
+  padding: 0 5px;
+  /*font-family: "museo_sans";*/
+  color: #adadad;
+  content: "-";
+}
+.breadcrumb > li > a {
+  /*font-family: "museo_sans";*/
+  color: #adadad;
+}
+.breadcrumb {
+  margin-top: 100px;
+  padding: 8px 15px;
+  margin-bottom: 20px;
+  list-style: none;
+  background-color: #efeff1;
+  border-radius: 0;
+}
+
+#breadcrumb-report{
+  margin-bottom: -15px;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  color: #ffffff;
+  cursor: default;
+  background-color: #007e7a;
+  border: none;
+  border-bottom-color: transparent;
+}
+.btn.btn-custom-lg,
+.btn.btn-custom-sm,
+.btn.btn-custom-xs {
+  border-radius: 0;
+  background-color: #00a19c;
+  font-size: 14px;
+  /*font-family: museo_sans;*/
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+#home.nav-tabs {
+  /* border-bottom: 1px solid #ddd; */
+  background-color: #00a19c;
+  font-size: 14px;
+  /*font-family: museo_sans;*/
+  font-weight: 700;
+  border-bottom: none;
+}
+#home.nav-tabs > li {
+  float: left;
+  margin-bottom: 0px;
+}
+#home.nav-tabs > li > a {
+  margin-right: 2px;
+  line-height: 1.42857143;
+  border: none;
+  color: #ffffff;
+  border-radius: 0px;
+}
+#home.nav-tabs > li > a:hover, #home.nav-tabs > li > a:focus{
+   background-color: transparent;
+}
+#home.nav-tabs > li.active > a:hover, #home.nav-tabs > li.active > a:focus{
+  background-color: #007e7a;
+}
+.form-group.required .control-label:after { 
+  content:"*";
+  color:red;
+}

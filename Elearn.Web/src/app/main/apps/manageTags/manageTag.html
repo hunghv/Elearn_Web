@@ -1,0 +1,310 @@
+﻿<div id="content" class="container-fluid">
+  <!--breadcrumb-->
+  <nav aria-label="breadcrumb" role="navigation">
+    <ol class="admin-role breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="#">
+          <a ui-sref="app.home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
+        </a>
+      </li>
+      <li class="breadcrumb-item"><a href="javascript:void(0)" ng-click="vm.gotoAllTab($event)">Administrator - Tag List</a></li>
+    </ol>
+  </nav>
+  <div class="home-search">
+    <button type="button" style="margin-bottom:20px" data-toggle="modal" data-target="#newTag" class="btn btn-default btn-custom-lg" ng-click="openCreate()">CREATE NEW TAG</button>
+    <button type="button" style="margin-bottom: 20px;background-color: #625d9d" data-toggle="modal" data-target="#attachmentPopup" class="btn btn-default btn-custom-lg">BROWSE FILE</button>
+    <button type="button" style="margin-bottom: 20px; background-color: #49a01c" class="btn btn-default btn-custom-lg" ng-click="downloadExport()">EXPORT FILE</button>
+    <div class="search_head right" style="padding: 0px;width:400px">
+      <form ng-submit="Search()">
+        <input type="text" class="grid_search form-control" placeholder="Search user by Tag No, Eca Rating, MPlan, PId..." ng-model="Keyword" />
+        <button type="submit" style="top: 1px;">
+          <i class="icon-search"></i>
+        </button>
+      </form>
+    </div>
+    <div class="clear-report"></div>
+  </div>
+  <div>
+    <div kendo-grid="grid" class="report-grid" options="mainGridOptions"></div>
+  </div>
+</div>
+
+
+<!--Popup-->
+
+<script type="text/x-kendo-template" id="editorTemplate">
+  <div>
+    <form id="create-update-form">
+        <div class="form-group row">
+            <label for="eca-rating" class="col-sm-2 col-form-label">Area</label>
+            <div class="col-sm-8">
+              <select 
+                      width="100%"
+                      kendo-drop-down-list
+                      id="area"
+                      name="area"
+                      data-required-msg
+                      data-bind="value: area"
+                      k-options="areaOption"></select>
+              <span class="k-invalid-msg" data-for="area"></span>
+            </div>
+          </div>
+      <div class="form-group row">
+        <label for="tag-no" class="col-sm-2 col-form-label">Tag No</label>
+        <div class="col-sm-8">
+          <input id="tag-no" kendo-text-box data-bind="value: tagNo" class="form-control" disabled
+                 required
+                 validationMessage="This field is required." />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="eca-rating" class="col-sm-2 col-form-label">ECA Rating</label>
+        <div class="col-sm-8">
+          <select 
+                  width="100%"
+                  kendo-drop-down-list
+                  id="eca-rating"
+                  name="eca-rating"
+                  data-required-msg
+                  data-bind="value: ecaRating"
+                  k-options="ecaOption"></select>
+          <span class="k-invalid-msg" data-for="eca-rating"></span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="m-plan" class="col-sm-2 col-form-label">MPlan</label>
+        <div class="col-sm-8">
+          <input id="m-plan" kendo-text-box data-bind="value: mPlan"
+                 required
+                 validationMessage="This field is required."
+                 class="form-control" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="p-id" class="col-sm-2 col-form-label">P&ID</label>
+        <div class="col-sm-8">
+          <input id="p-id" kendo-text-box data-bind="value: pid"
+                 required
+                 validationMessage="This field is required."
+                 class="form-control" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="description" class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-8">
+          <textarea class="form-control"
+                    rows="5"
+                    required
+                    validationMessage="This field is required."
+                    id="description"
+                    data-bind="value: description"
+                   ></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+</script>
+
+<div id="newTag" class="modal fade" role="dialog">
+  <form id="new-tag-form" ng-submit="doSubmit()">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">New Tag</h4>
+        </div>
+        <div class="modal-body">
+          <div class="md-dialog-content">
+            <div class="form-group row">
+              <label for="eca-rating" class="col-sm-3 col-form-label">Area</label>
+              <div class="col-sm-9">
+                <select class="form-control"
+                        kendo-drop-down-list
+                        id="area"
+                        name="area"
+                        data-required-msg
+                        k-options="areaOption"
+                        k-ng-model="area"></select>
+                <span class="k-invalid-msg" data-for="eca-rating"></span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="tag-no" class="col-sm-3 col-form-label">Tag No</label>
+              <div class="col-sm-9">
+                <input data-required-msg
+                       id="tag-no"
+                       name="tag-no"
+                       kendo-text-box
+                       ng-model="tagNo"
+                       class="form-control" />
+                <span class="k-invalid-msg" data-for="tag-no"></span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="eca-rating" class="col-sm-3 col-form-label">ECA Rating</label>
+              <div class="col-sm-9">
+                <select class="form-control"
+                        kendo-drop-down-list
+                        id="eca-rating"
+                        name="eca-rating"
+                        data-required-msg
+                        k-options="ecaOption"
+                        k-ng-model="ecaRating"></select>
+                <span class="k-invalid-msg" data-for="eca-rating"></span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="m-plan" class="col-sm-3 col-form-label">MPlan</label>
+              <div class="col-sm-9">
+                <input id="m-plan"
+                       name="m-plan"
+                       data-required-msg
+                       kendo-text-box
+                       ng-model="mPlan"
+                       class="form-control" />
+                <span class="k-invalid-msg" data-for="m-plan"></span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="p-id" class="col-sm-3 col-form-label">P&Id</label>
+              <div class="col-sm-9">
+                <input id="p-id"
+                       name="p-id"
+                       data-required-msg
+                       kendo-text-box
+                       ng-model="pId"
+                       class="form-control" />
+                <span class="k-invalid-msg" data-for="p-id"></span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="description" class="col-sm-3 col-form-label">Description</label>
+              <div class="col-sm-9">
+                <textarea class="form-control"
+                          rows="5"
+                          data-required-msg
+                          ng-model="description"
+                          id="description"
+                          name="description"
+                         ></textarea>
+                <span class="k-invalid-msg" data-for="description"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" ng-click="doCancel()">Cancel</button>
+          <button type="submit" class="btn btn-default">Save</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div id="attachmentPopup" class="modal fade" role="dialog">
+  <form id="frmAttachmentPopup" ng-submit="submitAttach()">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Import File</h4>
+        </div>
+
+        <div class="modal-body">
+          <div class="md-dialog-content">
+            <div class="form-group">
+              <input name="txtFileUpdate"
+                     id="txtFileUpdate"
+                     type="file"
+                     kendo-upload
+                     k-multiple="false"
+                     k-validation="{allowedExtensions:['.xlsx','.xls']}" />
+            </div>
+
+            <div class="form-group">
+              <label><span>Support import file: excel</span></label>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" ng-click="cancelAttach()">Cancel</button>
+          <button type="submit" class="btn btn-default">Import</button>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>
+<div id="confirmUploadError" class="modal fade modal-md" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Warning</h4>
+      </div>
+
+      <div class="modal-body">
+        <p>Some problems have happened to import transaction.
+          Please check Tag No which have been imported successfully on below table.
+          For those not imported yet, please check and import again.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="width: 50px">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="confirmImportTag" class="modal fade modal-md" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Warning</h4>
+      </div>
+
+      <div class="modal-body">
+        <p>Import Tags May be will overide current tags data.Do you want to continue?
+        </p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" style="width: 70px">Cancel</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="submitNewAttach()" style="width: 50px">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  .k-widget .form-control {
+    border: 1px solid #d5d5d5;
+    text-indent: 0;
+    height: auto; 
+    line-height: 25px;
+    padding: 5px 20px 5px 10px !important;
+    border-radius: 0;
+    margin-bottom: 14px;
+  }
+   .k-edit-form-container {
+     position: relative;
+     width: 630px;
+     padding-top: 20px;
+   }
+
+  .k-window .k-window-content {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border-radius: 0px;
+    padding: 0em 0 0.78em 0 !important;
+  }
+
+  #create-update-form {
+    padding-left: 10px;
+  }
+
+  @media (min-width: 768px) {
+    .col-sm-8 {
+      width: 70%;
+    }
+  }
+</style>

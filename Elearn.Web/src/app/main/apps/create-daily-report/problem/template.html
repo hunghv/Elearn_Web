@@ -1,0 +1,131 @@
+
+<div role="tabpanel" class="tab-pane active" id="Tab1">
+    <div class="col-md-12">
+        <div class="setting_heading cf">
+            <div class="left">
+                <h3>Problem</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-6">
+            <label>Start date</label>
+            <div>
+                <input kendo-date-picker
+                       ng-model="vm.problem.startDate">
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <label>End date</label>
+            <div>
+                <input kendo-date-picker
+                       ng-model="vm.problem.endDate">
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-6">
+            <label>PTW#</label>
+            <input type="text"
+                   class="form-control"
+                   kendo-text-box
+                   ng-model="vm.problem.ptw">
+        </div>
+        <div class="col-md-6">
+            <label>WO#</label>
+            <input type="text"
+                   class="form-control"
+                   kendo-text-box
+                   ng-model="vm.problem.wo">
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="form-group">
+        <hr />
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-6">
+            <label>Tag No</label>
+            <input type="text"
+                   class="form-control"
+                   kendo-auto-complete
+                   ng-model="vm.problem.tagNo"
+                   k-options="vm.autoCompleteTagNo"
+                   k-select="vm.onselect" />
+
+        </div>
+        <div class="col-md-6">
+            <label>ECA Rating</label>
+            <input type="text"
+                   class="form-control"
+                   kendo-text-box
+                   ng-model="vm.problem.ecaRating"
+                   readonly />
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-6">
+            <label>P&ID</label>
+            <input type="text"
+                   class="form-control"
+                   kendo-text-box
+                   ng-model="vm.problem.pid"
+                   readonly />
+        </div>
+        <div class="col-md-6">
+            <label>MPlan</label>
+            <input type="text"
+                   class="form-control"
+                   kendo-text-box
+                   ng-model="vm.problem.mplan"
+                   readonly />
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <label>Description</label>
+            <textarea class="form-control"
+                      rows="5"
+                      kendo-editor
+                      ng-model="vm.problem.description"></textarea>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="form-group">
+        <hr />
+    </div>
+    <div class="form-group">
+        <div class="col-md-6">
+            <label>Area</label>
+            <select class="form-control"
+                    ng-model="vm.problem.areaId"
+                    ng-options="item.name for item in vm.problem.areas track by item.id"
+                    ng-change="vm.getUnit(vm.problem.areaId)"></select>
+        </div>
+        <div class="col-md-6">
+            <label>Unit</label>
+            <select class="form-control"
+                    ng-model="vm.problem.unitId"
+                    ng-options="it.name for it in vm.problem.units track by it.id"></select>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <label>Problem Description</label>
+            <textarea class="form-control"
+                      rows="5"
+                      kendo-editor
+                      ng-model="vm.problem.problemDescription"></textarea>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

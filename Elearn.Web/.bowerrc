@@ -1,3 +1,9 @@
 {
-  "directory": "bower_components"
+  "directory": "bower_components",
+	"scripts": {
+		"postinstall": "gulp wiredep"
+	},
+	"https-proxy": "http://alexminghui.wong:Petronas2017%402@170.38.22.240:8080",
+  "proxy": "http://alexminghui.wong:Petronas2017%402@170.38.22.240:8080",
+  "strict-ssl": false
 }

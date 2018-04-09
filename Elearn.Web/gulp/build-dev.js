@@ -29,7 +29,7 @@ gulp.task('html-dev', ['inject'], function ()
         endtag      : '// endinjector',
         addRootSlash: false
     };
-
+     
     gulp.src([
             path.join(conf.paths.src, '/app/index.scss')
         ])
@@ -38,11 +38,15 @@ gulp.task('html-dev', ['inject'], function ()
     // End - Copied from styles.js
 
     var htmlFilter = $.filter('*.html', {restore: true});
+    var jsModuleFilter = $.filter('**/*.module.js', {restore: true});
     var jsFilter = $.filter('**/*.js', {restore: true});
     var cssFilter = $.filter('**/*.css', {restore: true});
 
     return gulp.src(path.join(conf.paths.tmp, '/serve/*.html'))
         .pipe($.useref())
+        .pipe(jsModuleFilter)
+        .pipe($.ngAnnotate())
+        .pipe(jsModuleFilter.restore)
         .pipe(jsFilter)
         .pipe($.ngAnnotate())
         .pipe(jsFilter.restore)

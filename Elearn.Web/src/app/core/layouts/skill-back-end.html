@@ -1,0 +1,21 @@
+<md-header ui-view="header"></md-header>
+
+<div id="TopNav" class="bg_black">
+    <div class="container">
+        <h4>Admin</h4>
+    </div>
+</div>
+<div id="Admin">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2" ui-view="leftNavigation">
+                <!-- <div md-content class="tab-content" ui-view="subContent"> -->
+            </div>
+            <div class="col-md-10">
+                <div md-content id="content" class="skill-back-end" ui-view="content" flex></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<md-footer ui-view="footer"></md-footer>
