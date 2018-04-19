@@ -2,18 +2,14 @@
  * Angular Material Design
  * https://github.com/angular/material
  * @license MIT
- * v1.1.1
+ * v1.0.5
  */
-goog.provide('ngmaterial.components.gridList');
-goog.require('ngmaterial.core');
+goog.provide('ng.material.components.gridList');
+goog.require('ng.material.core');
 /**
  * @ngdoc module
  * @name material.components.gridList
  */
-GridListController.$inject = ["$mdUtil"];
-GridLayoutFactory.$inject = ["$mdUtil"];
-GridListDirective.$inject = ["$interpolate", "$mdConstant", "$mdGridLayout", "$mdMedia"];
-GridTileDirective.$inject = ["$mdMedia"];
 angular.module('material.components.gridList', ['material.core'])
        .directive('mdGridList', GridListDirective)
        .directive('mdGridTile', GridTileDirective)
@@ -50,7 +46,7 @@ angular.module('material.components.gridList', ['material.core'])
  *
  * The `md-grid-list` directive supports "responsive" attributes, which allow
  * different `md-cols`, `md-gutter` and `md-row-height` values depending on the
- * currently matching media query.
+ * currently matching media query (as defined in `$mdConstant.MEDIA`).
  *
  * In order to set a responsive attribute, first define the fallback value with
  * the standard attribute name, then add additional attributes with the
@@ -116,8 +112,6 @@ function GridListDirective($interpolate, $mdConstant, $mdGridLayout, $mdMedia) {
   };
 
   function postLink(scope, element, attrs, ctrl) {
-    element.addClass('_md');     // private md component indicator for styling
-    
     // Apply semantics
     element.attr('role', 'list');
 
@@ -396,10 +390,6 @@ function GridListDirective($interpolate, $mdConstant, $mdGridLayout, $mdMedia) {
 
     function getRowHeight() {
       var rowHeight = $mdMedia.getResponsiveAttribute(attrs, 'md-row-height');
-      if (!rowHeight) {
-        throw 'md-grid-list: md-row-height attribute was not found';
-      }
-
       switch (getRowMode()) {
         case 'fixed':
           return applyDefaultUnit(rowHeight);
@@ -413,10 +403,6 @@ function GridListDirective($interpolate, $mdConstant, $mdGridLayout, $mdMedia) {
 
     function getRowMode() {
       var rowHeight = $mdMedia.getResponsiveAttribute(attrs, 'md-row-height');
-      if (!rowHeight) {
-        throw 'md-grid-list: md-row-height attribute was not found';
-      }
-
       if (rowHeight == 'fit') {
         return 'fit';
       } else if (rowHeight.indexOf(':') !== -1) {
@@ -431,6 +417,7 @@ function GridListDirective($interpolate, $mdConstant, $mdGridLayout, $mdMedia) {
     }
   }
 }
+GridListDirective.$inject = ["$interpolate", "$mdConstant", "$mdGridLayout", "$mdMedia"];
 
 /* ngInject */
 function GridListController($mdUtil) {
@@ -439,6 +426,7 @@ function GridListController($mdUtil) {
   this.$timeout_ = $mdUtil.nextTick;
   this.layoutDelegate = angular.noop;
 }
+GridListController.$inject = ["$mdUtil"];
 
 GridListController.prototype = {
   invalidateTiles: function() {
@@ -661,6 +649,7 @@ function GridLayoutFactory($mdUtil) {
     }
   }
 }
+GridLayoutFactory.$inject = ["$mdUtil"];
 
 /**
  * @ngdoc directive
@@ -676,7 +665,7 @@ function GridLayoutFactory($mdUtil) {
  *
  * The `md-grid-tile` directive supports "responsive" attributes, which allow
  * different `md-rowspan` and `md-colspan` values depending on the currently
- * matching media query.
+ * matching media query (as defined in `$mdConstant.MEDIA`).
  *
  * In order to set a responsive attribute, first define the fallback value with
  * the standard attribute name, then add additional attributes with the
@@ -762,6 +751,7 @@ function GridTileDirective($mdMedia) {
     }
   }
 }
+GridTileDirective.$inject = ["$mdMedia"];
 
 
 function GridTileCaptionDirective() {
@@ -771,4 +761,4 @@ function GridTileCaptionDirective() {
   };
 }
 
-ngmaterial.components.gridList = angular.module("material.components.gridList");
+ng.material.components.gridList = angular.module("material.components.gridList");

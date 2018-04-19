@@ -1,32 +1,53 @@
 'use strict';
 
-var instances = require('../instances');
-var updateGeometry = require('../update-geometry');
-var updateScroll = require('../update-scroll');
+var h = require('../../lib/helper')
+  , instances = require('../instances')
+  , updateGeometry = require('../update-geometry')
+  , updateScroll = require('../update-scroll');
 
 function bindClickRailHandler(element, i) {
   function pageOffset(el) {
     return el.getBoundingClientRect();
   }
-  var stopPropagation = function (e) { e.stopPropagation(); };
+  var stopPropagation = window.Event.prototype.stopPropagation.bind;
 
-  i.event.bind(i.scrollbarY, 'click', stopPropagation);
+  if (i.settings.stopPropagationOnClick) {
+    i.event.bind(i.scrollbarY, 'click', stopPropagation);
+  }
   i.event.bind(i.scrollbarYRail, 'click', function (e) {
-    var positionTop = e.pageY - window.pageYOffset - pageOffset(i.scrollbarYRail).top;
-    var direction = positionTop > i.scrollbarYTop ? 1 : -1;
+    var halfOfScrollbarLength = h.toInt(i.scrollbarYHeight / 2);
+    var positionTop = i.railYRatio * (e.pageY - window.pageYOffset - pageOffset(i.scrollbarYRail).top - halfOfScrollbarLength);
+    var maxPositionTop = i.railYRatio * (i.railYHeight - i.scrollbarYHeight);
+    var positionRatio = positionTop / maxPositionTop;
 
-    updateScroll(element, 'top', element.scrollTop + direction * i.containerHeight);
+    if (positionRatio < 0) {
+      positionRatio = 0;
+    } else if (positionRatio > 1) {
+      positionRatio = 1;
+    }
+
+    updateScroll(element, 'top', (i.contentHeight - i.containerHeight) * positionRatio);
     updateGeometry(element);
 
     e.stopPropagation();
   });
 
-  i.event.bind(i.scrollbarX, 'click', stopPropagation);
+  if (i.settings.stopPropagationOnClick) {
+    i.event.bind(i.scrollbarX, 'click', stopPropagation);
+  }
   i.event.bind(i.scrollbarXRail, 'click', function (e) {
-    var positionLeft = e.pageX - window.pageXOffset - pageOffset(i.scrollbarXRail).left;
-    var direction = positionLeft > i.scrollbarXLeft ? 1 : -1;
+    var halfOfScrollbarLength = h.toInt(i.scrollbarXWidth / 2);
+    var positionLeft = i.railXRatio * (e.pageX - window.pageXOffset - pageOffset(i.scrollbarXRail).left - halfOfScrollbarLength);
+    var maxPositionLeft = i.railXRatio * (i.railXWidth - i.scrollbarXWidth);
+    var positionRatio = positionLeft / maxPositionLeft;
 
-    updateScroll(element, 'left', element.scrollLeft + direction * i.containerWidth);
+    if (positionRatio < 0) {
+      positionRatio = 0;
+    } else if (positionRatio > 1) {
+      positionRatio = 1;
+    }
+
+    updateScroll(element, 'left', ((i.contentWidth - i.containerWidth) * positionRatio) - i.negativeScrollAdjustment);
     updateGeometry(element);
 
     e.stopPropagation();

@@ -1,10 +1,10 @@
 'use strict';
 
-var _ = require('../../lib/helper');
-var dom = require('../../lib/dom');
-var instances = require('../instances');
-var updateGeometry = require('../update-geometry');
-var updateScroll = require('../update-scroll');
+var h = require('../../lib/helper')
+  , d = require('../../lib/dom')
+  , instances = require('../instances')
+  , updateGeometry = require('../update-geometry')
+  , updateScroll = require('../update-scroll');
 
 function bindKeyboardHandler(element, i) {
   var hovered = false;
@@ -40,12 +40,12 @@ function bindKeyboardHandler(element, i) {
   }
 
   i.event.bind(i.ownerDocument, 'keydown', function (e) {
-    if ((e.isDefaultPrevented && e.isDefaultPrevented()) || e.defaultPrevented) {
+    if (e.isDefaultPrevented && e.isDefaultPrevented()) {
       return;
     }
 
-    var focused = dom.matches(i.scrollbarX, ':focus') ||
-                  dom.matches(i.scrollbarY, ':focus');
+    var focused = d.matches(i.scrollbarX, ':focus') ||
+                  d.matches(i.scrollbarY, ':focus');
 
     if (!hovered && !focused) {
       return;
@@ -53,15 +53,11 @@ function bindKeyboardHandler(element, i) {
 
     var activeElement = document.activeElement ? document.activeElement : i.ownerDocument.activeElement;
     if (activeElement) {
-      if (activeElement.tagName === 'IFRAME') {
-        activeElement = activeElement.contentDocument.activeElement;
-      } else {
-        // go deeper if element is a webcomponent
-        while (activeElement.shadowRoot) {
-          activeElement = activeElement.shadowRoot.activeElement;
-        }
+      // go deeper if element is a webcomponent
+      while (activeElement.shadowRoot) {
+        activeElement = activeElement.shadowRoot.activeElement;
       }
-      if (_.isEditable(activeElement)) {
+      if (h.isEditable(activeElement)) {
         return;
       }
     }
@@ -71,40 +67,16 @@ function bindKeyboardHandler(element, i) {
 
     switch (e.which) {
     case 37: // left
-      if (e.metaKey) {
-        deltaX = -i.contentWidth;
-      } else if (e.altKey) {
-        deltaX = -i.containerWidth;
-      } else {
-        deltaX = -30;
-      }
+      deltaX = -30;
       break;
     case 38: // up
-      if (e.metaKey) {
-        deltaY = i.contentHeight;
-      } else if (e.altKey) {
-        deltaY = i.containerHeight;
-      } else {
-        deltaY = 30;
-      }
+      deltaY = 30;
       break;
     case 39: // right
-      if (e.metaKey) {
-        deltaX = i.contentWidth;
-      } else if (e.altKey) {
-        deltaX = i.containerWidth;
-      } else {
-        deltaX = 30;
-      }
+      deltaX = 30;
       break;
     case 40: // down
-      if (e.metaKey) {
-        deltaY = -i.contentHeight;
-      } else if (e.altKey) {
-        deltaY = -i.containerHeight;
-      } else {
-        deltaY = -30;
-      }
+      deltaY = -30;
       break;
     case 33: // page up
       deltaY = 90;

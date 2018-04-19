@@ -2,19 +2,17 @@
  * Angular Material Design
  * https://github.com/angular/material
  * @license MIT
- * v1.1.1
+ * v1.0.5
  */
-goog.provide('ngmaterial.components.bottomSheet');
-goog.require('ngmaterial.components.backdrop');
-goog.require('ngmaterial.core');
+goog.provide('ng.material.components.bottomSheet');
+goog.require('ng.material.components.backdrop');
+goog.require('ng.material.core');
 /**
  * @ngdoc module
  * @name material.components.bottomSheet
  * @description
  * BottomSheet
  */
-MdBottomSheetDirective.$inject = ["$mdBottomSheet"];
-MdBottomSheetProvider.$inject = ["$$interimElementProvider"];
 angular
   .module('material.components.bottomSheet', [
     'material.core',
@@ -27,9 +25,7 @@ angular
 function MdBottomSheetDirective($mdBottomSheet) {
   return {
     restrict: 'E',
-    link : function postLink(scope, element) {
-      element.addClass('_md');     // private md component indicator for styling
-
+    link : function postLink(scope, element, attr) {
       // When navigation force destroys an interimElement, then
       // listen and $destroy() that interim instance...
       scope.$on('$destroy', function() {
@@ -38,6 +34,7 @@ function MdBottomSheetDirective($mdBottomSheet) {
     }
   };
 }
+MdBottomSheetDirective.$inject = ["$mdBottomSheet"];
 
 
 /**
@@ -98,7 +95,6 @@ function MdBottomSheetDirective($mdBottomSheet) {
  *   of 3.
  *   - `clickOutsideToClose` - `{boolean=}`: Whether the user can click outside the bottom sheet to
  *     close it. Default true.
- *   - `disableBackdrop` - `{boolean=}`: When set to true, the bottomsheet will not show a backdrop.
  *   - `escapeToClose` - `{boolean=}`: Whether the user can press escape to close the bottom sheet.
  *     Default true.
  *   - `resolve` - `{object=}`: Similar to locals, except it takes promises as values
@@ -140,10 +136,10 @@ function MdBottomSheetDirective($mdBottomSheet) {
 
 function MdBottomSheetProvider($$interimElementProvider) {
   // how fast we need to flick down to close the sheet, pixels/ms
-  bottomSheetDefaults.$inject = ["$animate", "$mdConstant", "$mdUtil", "$mdTheming", "$mdBottomSheet", "$rootElement", "$mdGesture", "$log"];
   var CLOSING_VELOCITY = 0.5;
   var PADDING = 80; // same as css
 
+  bottomSheetDefaults.$inject = ["$animate", "$mdConstant", "$mdUtil", "$mdTheming", "$mdBottomSheet", "$rootElement", "$mdGesture"];
   return $$interimElementProvider('$mdBottomSheet')
     .setDefaults({
       methods: ['disableParentScroll', 'escapeToClose', 'clickOutsideToClose'],
@@ -151,15 +147,13 @@ function MdBottomSheetProvider($$interimElementProvider) {
     });
 
   /* ngInject */
-  function bottomSheetDefaults($animate, $mdConstant, $mdUtil, $mdTheming, $mdBottomSheet, $rootElement,
-                               $mdGesture, $log) {
+  function bottomSheetDefaults($animate, $mdConstant, $mdUtil, $mdTheming, $mdBottomSheet, $rootElement, $mdGesture) {
     var backdrop;
 
     return {
       themable: true,
       onShow: onShow,
       onRemove: onRemove,
-      disableBackdrop: false,
       escapeToClose: true,
       clickOutsideToClose: true,
       disableParentScroll: true
@@ -170,36 +164,18 @@ function MdBottomSheetProvider($$interimElementProvider) {
 
       element = $mdUtil.extractElementByName(element, 'md-bottom-sheet');
 
-      // prevent tab focus or click focus on the bottom-sheet container
-      element.attr('tabindex',"-1");
+      // Add a backdrop that will close on click
+      backdrop = $mdUtil.createBackdrop(scope, "md-bottom-sheet-backdrop md-opaque");
 
-      // Once the md-bottom-sheet has `ng-cloak` applied on his template the opening animation will not work properly.
-      // This is a very common problem, so we have to notify the developer about this.
-      if (element.hasClass('ng-cloak')) {
-        var message = '$mdBottomSheet: using `<md-bottom-sheet ng-cloak >` will affect the bottom-sheet opening animations.';
-        $log.warn( message, element[0] );
+      if (options.clickOutsideToClose) {
+        backdrop.on('click', function() {
+          $mdUtil.nextTick($mdBottomSheet.cancel,true);
+        });
       }
 
-      if (!options.disableBackdrop) {
-        // Add a backdrop that will close on click
-        backdrop = $mdUtil.createBackdrop(scope, "md-bottom-sheet-backdrop md-opaque");
+      $mdTheming.inherit(backdrop, options.parent);
 
-        // Prevent mouse focus on backdrop; ONLY programatic focus allowed.
-        // This allows clicks on backdrop to propogate to the $rootElement and
-        // ESC key events to be detected properly.
-        
-        backdrop[0].tabIndex = -1;
-
-        if (options.clickOutsideToClose) {
-          backdrop.on('click', function() {
-            $mdUtil.nextTick($mdBottomSheet.cancel,true);
-          });
-        }
-
-        $mdTheming.inherit(backdrop, options.parent);
-
-        $animate.enter(backdrop, options.parent, null);
-      }
+      $animate.enter(backdrop, options.parent, null);
 
       var bottomSheet = new BottomSheet(element, options.parent);
       options.bottomSheet = bottomSheet;
@@ -210,13 +186,14 @@ function MdBottomSheetProvider($$interimElementProvider) {
         options.restoreScroll = $mdUtil.disableScrollAround(bottomSheet.element, options.parent);
       }
 
-      return $animate.enter(bottomSheet.element, options.parent, backdrop)
+      return $animate.enter(bottomSheet.element, options.parent)
         .then(function() {
           var focusable = $mdUtil.findFocusTarget(element) || angular.element(
             element[0].querySelector('button') ||
             element[0].querySelector('a') ||
-            element[0].querySelector($mdUtil.prefixer('ng-click', true))
-          ) || backdrop;
+            element[0].querySelector('[ng-click]')
+          );
+          focusable.focus();
 
           if (options.escapeToClose) {
             options.rootElementKeyupCallback = function(e) {
@@ -224,9 +201,7 @@ function MdBottomSheetProvider($$interimElementProvider) {
                 $mdUtil.nextTick($mdBottomSheet.cancel,true);
               }
             };
-
             $rootElement.on('keyup', options.rootElementKeyupCallback);
-            focusable && focusable.focus();
           }
         });
 
@@ -236,7 +211,7 @@ function MdBottomSheetProvider($$interimElementProvider) {
 
       var bottomSheet = options.bottomSheet;
 
-      if (!options.disableBackdrop) $animate.leave(backdrop);
+      $animate.leave(backdrop);
       return $animate.leave(bottomSheet.element).then(function() {
         if (options.disableParentScroll) {
           options.restoreScroll();
@@ -297,5 +272,6 @@ function MdBottomSheetProvider($$interimElementProvider) {
   }
 
 }
+MdBottomSheetProvider.$inject = ["$$interimElementProvider"];
 
-ngmaterial.components.bottomSheet = angular.module("material.components.bottomSheet");
+ng.material.components.bottomSheet = angular.module("material.components.bottomSheet");

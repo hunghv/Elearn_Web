@@ -26,30 +26,17 @@
     }
 
     .logo {
-        justify-content: center;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        .logo-image {
-                display: block;
-                background: white;
-                width: 48px;
-                min-width: 48px;
-                height: 48px;
-                line-height: 48px;
-                text-align: center;
-                font-size: 16px;
-                font-weight: 500;
-                color: #FFFFFF;
-                border-radius: 2px;
-            }
-
-            .logo-text {
-                color: #FFFFFF;
-                margin-top: 16px;
-                font-size: 16px;
-            }
+        width: 96px;
+        height: 96px;
+        line-height: 96px;
+        margin: 0 auto;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 56px;
+        text-align: center;
+        border-radius: 2px;
+        background-color: #039BE5;
+        color: #FFFFFF;
+        box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.22);
     }
 
     .spinner-wrapper {
@@ -96,7 +83,7 @@
                         width: 100px;
                         height: 100px;
                         box-sizing: border-box;
-                        border: 10px solid white;
+                        border: 10px solid #4285F4;
                         border-bottom-color: transparent;
                         border-radius: 50%;
                     }

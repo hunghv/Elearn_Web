@@ -11,7 +11,7 @@ function isOnlyChange(event)
     return event.type === 'changed';
 }
 
-gulp.task('watch', ['clean', 'inject'], function ()
+gulp.task('watch', ['inject'], function ()
 {
     gulp.watch([path.join(conf.paths.src, '/*.html'), 'bower.json'], ['inject-reload']);
 

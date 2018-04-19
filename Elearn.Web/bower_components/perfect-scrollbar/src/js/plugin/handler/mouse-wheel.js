@@ -1,8 +1,8 @@
 'use strict';
 
-var instances = require('../instances');
-var updateGeometry = require('../update-geometry');
-var updateScroll = require('../update-scroll');
+var instances = require('../instances')
+  , updateGeometry = require('../update-geometry')
+  , updateScroll = require('../update-scroll');
 
 function bindMouseWheelHandler(element, i) {
   var shouldPrevent = false;
@@ -52,30 +52,23 @@ function bindMouseWheelHandler(element, i) {
       deltaY = e.wheelDelta;
     }
 
-    if (e.shiftKey) {
-      // reverse axis with shift key
-      return [-deltaY, -deltaX];
-    }
     return [deltaX, deltaY];
   }
 
-  function shouldBeConsumedByChild(deltaX, deltaY) {
-    var child = element.querySelector('textarea:hover, select[multiple]:hover, .ps-child:hover');
-    if (child) {
-      if (!window.getComputedStyle(child).overflow.match(/(scroll|auto)/)) {
-        // if not scrollable
-        return false;
-      }
-
-      var maxScrollTop = child.scrollHeight - child.clientHeight;
+  function shouldBeConsumedByTextarea(deltaX, deltaY) {
+    var hoveredTextarea = element.querySelector('textarea:hover');
+    if (hoveredTextarea) {
+      var maxScrollTop = hoveredTextarea.scrollHeight - hoveredTextarea.clientHeight;
       if (maxScrollTop > 0) {
-        if (!(child.scrollTop === 0 && deltaY > 0) && !(child.scrollTop === maxScrollTop && deltaY < 0)) {
+        if (!(hoveredTextarea.scrollTop === 0 && deltaY > 0) &&
+            !(hoveredTextarea.scrollTop === maxScrollTop && deltaY < 0)) {
           return true;
         }
       }
-      var maxScrollLeft = child.scrollLeft - child.clientWidth;
+      var maxScrollLeft = hoveredTextarea.scrollLeft - hoveredTextarea.clientWidth;
       if (maxScrollLeft > 0) {
-        if (!(child.scrollLeft === 0 && deltaX < 0) && !(child.scrollLeft === maxScrollLeft && deltaX > 0)) {
+        if (!(hoveredTextarea.scrollLeft === 0 && deltaX < 0) &&
+            !(hoveredTextarea.scrollLeft === maxScrollLeft && deltaX > 0)) {
           return true;
         }
       }
@@ -89,7 +82,7 @@ function bindMouseWheelHandler(element, i) {
     var deltaX = delta[0];
     var deltaY = delta[1];
 
-    if (shouldBeConsumedByChild(deltaX, deltaY)) {
+    if (shouldBeConsumedByTextarea(deltaX, deltaY)) {
       return;
     }
 

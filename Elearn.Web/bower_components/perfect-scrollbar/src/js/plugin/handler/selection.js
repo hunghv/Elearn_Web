@@ -1,9 +1,9 @@
 'use strict';
 
-var _ = require('../../lib/helper');
-var instances = require('../instances');
-var updateGeometry = require('../update-geometry');
-var updateScroll = require('../update-scroll');
+var h = require('../../lib/helper')
+  , instances = require('../instances')
+  , updateGeometry = require('../update-geometry')
+  , updateScroll = require('../update-scroll');
 
 function bindSelectionHandler(element, i) {
   function getRangeNode() {
@@ -37,7 +37,7 @@ function bindSelectionHandler(element, i) {
       clearInterval(scrollingLoop);
       scrollingLoop = null;
     }
-    _.stopScrolling(element);
+    h.stopScrolling(element);
   }
 
   var isSelected = false;
@@ -50,12 +50,6 @@ function bindSelectionHandler(element, i) {
     }
   });
   i.event.bind(window, 'mouseup', function () {
-    if (isSelected) {
-      isSelected = false;
-      stopScrolling();
-    }
-  });
-  i.event.bind(window, 'keyup', function () {
     if (isSelected) {
       isSelected = false;
       stopScrolling();
@@ -74,10 +68,10 @@ function bindSelectionHandler(element, i) {
 
       if (mousePosition.x < containerGeometry.left + 3) {
         scrollDiff.left = -5;
-        _.startScrolling(element, 'x');
+        h.startScrolling(element, 'x');
       } else if (mousePosition.x > containerGeometry.right - 3) {
         scrollDiff.left = 5;
-        _.startScrolling(element, 'x');
+        h.startScrolling(element, 'x');
       } else {
         scrollDiff.left = 0;
       }
@@ -88,14 +82,14 @@ function bindSelectionHandler(element, i) {
         } else {
           scrollDiff.top = -20;
         }
-        _.startScrolling(element, 'y');
+        h.startScrolling(element, 'y');
       } else if (mousePosition.y > containerGeometry.bottom - 3) {
         if (mousePosition.y - containerGeometry.bottom + 3 < 5) {
           scrollDiff.top = 5;
         } else {
           scrollDiff.top = 20;
         }
-        _.startScrolling(element, 'y');
+        h.startScrolling(element, 'y');
       } else {
         scrollDiff.top = 0;
       }

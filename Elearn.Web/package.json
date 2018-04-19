@@ -1,9 +1,7 @@
 {
   "name": "fuse",
   "version": "1.3.0",
-  "dependencies": {
-    "gulp-rev": "^6.0.1"
-  },
+  "dependencies": {},
   "scripts": {
     "test": "gulp test"
   },

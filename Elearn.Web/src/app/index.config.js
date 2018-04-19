@@ -1,4 +1,5 @@
-﻿(function () {
+(function ()
+{
     'use strict';
 
     angular
@@ -6,8 +7,9 @@
         .config(config);
 
     /** @ngInject */
-    function config($httpProvider, $compileProvider) {
-        // Put your custom configurations here
+    function config($httpProvider, $compileProvider)
+    {
+        // Put your custom configurations here// Put your custom configurations here
         $httpProvider.interceptors.push(['$q', function ($q) {
 			return {
 				'responseError': function (rejection) {
@@ -18,7 +20,7 @@
 					    return rejection;
 
 					} else if (rejection.status === 401) {
-						window.location.href = '/pages/auth/login';
+						//window.location.href = '/pages/auth/login';
 					}
 					else {
 						defer.reject(rejection);

@@ -1,4 +1,5 @@
-(function () {
+(function ()
+{
     'use strict';
 
     angular
@@ -6,10 +7,11 @@
         .config(routeConfig);
 
     /** @ngInject */
-    function routeConfig($stateProvider, $urlRouterProvider, $locationProvider) {
+    function routeConfig($stateProvider, $urlRouterProvider, $locationProvider)
+    {
         $locationProvider.html5Mode(true);
 
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/categories');
 
         /**
          * Layout Style Switcher
@@ -24,20 +26,35 @@
         var $cookies;
 
         angular.injector(['ngCookies']).invoke([
-            '$cookies', function (_$cookies) {
+            '$cookies', function (_$cookies)
+            {
                 $cookies = _$cookies;
             }
         ]);
 
         // Get active layout
-        var layoutStyle = $cookies.get('layoutStyle') || 'frontEnd';
+        var layoutStyle = $cookies.get('layoutStyle') || 'verticalNavigation';
 
         var layouts = {
-            frontEnd: {
-                main: 'app/core/layouts/skill-front-end.html',
-
-                header: 'app/navigation/header.html',
-                footer: 'app/navigation/footer.html',
+            verticalNavigation  : {
+                main      : 'app/core/layouts/vertical-navigation.html',
+                toolbar   : 'app/toolbar/layouts/vertical-navigation/toolbar.html',
+                navigation: 'app/navigation/layouts/vertical-navigation/navigation.html'
+            },
+            horizontalNavigation: {
+                main      : 'app/core/layouts/horizontal-navigation.html',
+                toolbar   : 'app/toolbar/layouts/horizontal-navigation/toolbar.html',
+                navigation: 'app/navigation/layouts/horizontal-navigation/navigation.html'
+            },
+            contentOnly         : {
+                main      : 'app/core/layouts/content-only.html',
+                toolbar   : '',
+                navigation: ''
+            },
+            contentWithToolbar  : {
+                main      : 'app/core/layouts/content-with-toolbar.html',
+                toolbar   : 'app/toolbar/layouts/content-with-toolbar/toolbar.html',
+                navigation: ''
             }
         };
         // END - Layout Style Switcher
@@ -46,18 +63,22 @@
         $stateProvider
             .state('app', {
                 abstract: true,
-                views: {
-                    'main@': {
+                views   : {
+                    'main@'         : {
                         templateUrl: layouts[layoutStyle].main,
-                        controller: 'MainController as vm'
+                        controller : 'MainController as vm'
                     },
-                    'header@app': {
-                        templateUrl: layouts[layoutStyle].header,
-                        controller: 'HeaderController as vm'
+                    'toolbar@app'   : {
+                        templateUrl: layouts[layoutStyle].toolbar,
+                        controller : 'ToolbarController as vm'
                     },
-                    'footer@app': {
-                        templateUrl: layouts[layoutStyle].footer,
-                        controller: 'FooterController as vm'
+                    'navigation@app': {
+                        templateUrl: layouts[layoutStyle].navigation,
+                        controller : 'NavigationController as vm'
+                    },
+                    'quickPanel@app': {
+                        templateUrl: 'app/quick-panel/quick-panel.html',
+                        controller : 'QuickPanelController as vm'
                     }
                 }
             });

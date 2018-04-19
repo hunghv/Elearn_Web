@@ -1,20 +1,18 @@
 'use strict';
 
-var _ = require('../lib/helper');
-var cls = require('../lib/class');
-var instances = require('./instances');
-var updateGeometry = require('./update-geometry');
+var cls = require('../lib/class')
+  , h = require('../lib/helper')
+  , instances = require('./instances')
+  , updateGeometry = require('./update-geometry');
 
 // Handlers
-var handlers = {
-  'click-rail': require('./handler/click-rail'),
-  'drag-scrollbar': require('./handler/drag-scrollbar'),
-  'keyboard': require('./handler/keyboard'),
-  'wheel': require('./handler/mouse-wheel'),
-  'touch': require('./handler/touch'),
-  'selection': require('./handler/selection')
-};
-var nativeScrollHandler = require('./handler/native-scroll');
+var clickRailHandler = require('./handler/click-rail')
+  , dragScrollbarHandler = require('./handler/drag-scrollbar')
+  , keyboardHandler = require('./handler/keyboard')
+  , mouseWheelHandler = require('./handler/mouse-wheel')
+  , nativeScrollHandler = require('./handler/native-scroll')
+  , selectionHandler = require('./handler/selection')
+  , touchHandler = require('./handler/touch');
 
 module.exports = function (element, userSettings) {
   userSettings = typeof userSettings === 'object' ? userSettings : {};
@@ -24,14 +22,24 @@ module.exports = function (element, userSettings) {
   // Create a plugin instance.
   var i = instances.add(element);
 
-  i.settings = _.extend(i.settings, userSettings);
+  i.settings = h.extend(i.settings, userSettings);
   cls.add(element, 'ps-theme-' + i.settings.theme);
 
-  i.settings.handlers.forEach(function (handlerName) {
-    handlers[handlerName](element);
-  });
-
+  clickRailHandler(element);
+  dragScrollbarHandler(element);
+  mouseWheelHandler(element);
   nativeScrollHandler(element);
+
+  if (i.settings.useSelectionScroll) {
+    selectionHandler(element);
+  }
+
+  if (h.env.supportsTouch || h.env.supportsIePointer) {
+    touchHandler(element, h.env.supportsTouch, h.env.supportsIePointer);
+  }
+  if (i.settings.useKeyboard) {
+    keyboardHandler(element);
+  }
 
   updateGeometry(element);
 };

@@ -1,8 +1,8 @@
 'use strict';
 
-var _ = require('../lib/helper');
-var dom = require('../lib/dom');
-var instances = require('./instances');
+var d = require('../lib/dom')
+  , h = require('../lib/helper')
+  , instances = require('./instances');
 
 module.exports = function (element) {
   var i = instances.get(element);
@@ -12,11 +12,11 @@ module.exports = function (element) {
   }
 
   i.event.unbindAll();
-  dom.remove(i.scrollbarX);
-  dom.remove(i.scrollbarY);
-  dom.remove(i.scrollbarXRail);
-  dom.remove(i.scrollbarYRail);
-  _.removePsClasses(element);
+  d.remove(i.scrollbarX);
+  d.remove(i.scrollbarY);
+  d.remove(i.scrollbarXRail);
+  d.remove(i.scrollbarYRail);
+  h.removePsClasses(element);
 
   instances.remove(element);
 };

@@ -1,9 +1,8 @@
 'use strict';
 
-var _ = require('../../lib/helper');
-var instances = require('../instances');
-var updateGeometry = require('../update-geometry');
-var updateScroll = require('../update-scroll');
+var instances = require('../instances')
+  , updateGeometry = require('../update-geometry')
+  , updateScroll = require('../update-scroll');
 
 function bindTouchHandler(element, i, supportsTouch, supportsIePointer) {
   function shouldPreventDefault(deltaX, deltaY) {
@@ -88,9 +87,6 @@ function bindTouchHandler(element, i, supportsTouch, supportsIePointer) {
     }
   }
   function touchMove(e) {
-    if (!inLocalTouch && i.settings.swipePropagation) {
-      touchStart(e);
-    }
     if (!inGlobalTouch && inLocalTouch && shouldHandle(e)) {
       var touch = getTouch(e);
 
@@ -128,11 +124,6 @@ function bindTouchHandler(element, i, supportsTouch, supportsIePointer) {
           return;
         }
 
-        if (!speed.x && !speed.y) {
-          clearInterval(easingLoop);
-          return;
-        }
-
         if (Math.abs(speed.x) < 0.01 && Math.abs(speed.y) < 0.01) {
           clearInterval(easingLoop);
           return;
@@ -152,7 +143,9 @@ function bindTouchHandler(element, i, supportsTouch, supportsIePointer) {
     i.event.bind(element, 'touchstart', touchStart);
     i.event.bind(element, 'touchmove', touchMove);
     i.event.bind(element, 'touchend', touchEnd);
-  } else if (supportsIePointer) {
+  }
+
+  if (supportsIePointer) {
     if (window.PointerEvent) {
       i.event.bind(window, 'pointerdown', globalTouchStart);
       i.event.bind(window, 'pointerup', globalTouchEnd);
@@ -169,11 +162,7 @@ function bindTouchHandler(element, i, supportsTouch, supportsIePointer) {
   }
 }
 
-module.exports = function (element) {
-  if (!_.env.supportsTouch && !_.env.supportsIePointer) {
-    return;
-  }
-
+module.exports = function (element, supportsTouch, supportsIePointer) {
   var i = instances.get(element);
-  bindTouchHandler(element, i, _.env.supportsTouch, _.env.supportsIePointer);
+  bindTouchHandler(element, i, supportsTouch, supportsIePointer);
 };
