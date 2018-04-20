@@ -23,6 +23,8 @@
             // Sample
             'app.sample',
             //app.
-            'app.categories'
+            'app.categories',
+
+            'app.country'
         ]);
 })();

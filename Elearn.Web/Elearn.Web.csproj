@@ -18415,6 +18415,10 @@
     <Content Include="src\app\main\Categories\categories.controller.js" />
     <Content Include="src\app\main\Categories\categories.html" />
     <Content Include="src\app\main\Categories\categories.module.js" />
+    <Content Include="src\app\main\country\country.api.js" />
+    <Content Include="src\app\main\country\country.controller.js" />
+    <Content Include="src\app\main\country\country.html" />
+    <Content Include="src\app\main\country\country.module.js" />
     <Content Include="src\app\main\main.controller.js" />
     <Content Include="src\app\main\sample\sample.controller.js" />
     <Content Include="src\app\main\sample\sample.html" />
@@ -27415,6 +27419,7 @@
     <None Include="src\app\data\sample\sample.json" />
     <None Include="src\app\index.scss" />
     <None Include="src\app\main\Categories\i18n\en.json" />
+    <None Include="src\app\main\country\i18n\en.json" />
     <None Include="src\app\main\sample\i18n\en.json" />
     <None Include="src\app\navigation\layouts\horizontal-navigation\navigation.scss" />
     <None Include="src\app\navigation\layouts\vertical-navigation\navigation.scss" />
