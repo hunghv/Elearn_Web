@@ -1,3 +1,4 @@
+
 (function ()
 {
     'use strict';
@@ -39,32 +40,51 @@
 
         vm.addItem = function () {
             vm.errortext = "";
-                    
+            var flag=-1;
             if (!vm.addMe) {return;}
-             if (vm.categories.indexOf(vm.addMe) == -1) {
-                vm.categories.push(vm.addMe);
-             } 
-             else {
-                 vm.errortext = "The item is already in your shopping list.";
-             }
-             var data = {
-                 id: vm.categories.Id,
-                 name: vm.addMe,
-                 description:  vm.addMe
-               }
-               CategotieslApi.postSave(data).then(
-                function (response) {
-                  if (response.id == true) {
-                    $log.info('Changed collection successfully.');
+            var data = {
+                id: vm.categories.Id,
+                name: vm.addMe,
+                description:  vm.addMe
+              }
+              for(var i = 0; i < vm.categories; i += 1){
+                  if( vm.categories[i].name === vm.addMe){
+                    flag=i;
                   }
-                  else {
-                    $log.info('Changed collection failed.');
-                  }
-                });
+              }
+              if(flag===-1){
+                CategotieslApi.postSave(data).then(
+                    function (response) {
+                      if (response.results != undefined) {
+                        vm.errortext ='Done!';
+                        var data = {
+                            id: response.results,
+                            name: vm.addMe,
+                            description:  vm.addMe
+                          }
+                         vm.categories.push(data);
+                      } else {
+                        vm.errortext ='Changed Categories failed.';
+                      }
+                    });
+              }
+              else{
+                vm.errortext = "The item is already in your shopping list.";
+              }
             }
-         vm.removeItem = function (x) {
+
+         vm.removeItem = function (x,y) {
                    vm.errortext = "";    
-                   vm.products.splice(x, 1);
+                   CategotieslApi.Delete(x).then(
+                    function (response) {
+                      if (response.results) {
+                        vm.categories.splice(y, 1);
+                        vm.errortext ='Deleted categories successfully.';
+                      }
+                      else {
+                        vm.errortext ='Deleted categories failed.';
+                      }
+                    });
                 }
     }
 })();

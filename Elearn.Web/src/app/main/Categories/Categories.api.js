@@ -11,14 +11,14 @@
         var api = {
             
             getAll: $resource(appConfig.SkillApi + 'api/Admin/Categories/GetAllCategories'),
-            postSave: $resource(appConfig.SkillApi + 'api/Admin/Categories/Update?id=:id&type=:type'),
-            Delete: $resource(appConfig.SkillApi + 'api/Admin/Categories/Delete')
+            //postSave: $resource(appConfig.SkillApi + 'api/Admin/Categories/Update?id=:id&type=:type'),
+            postSave: $resource(appConfig.SkillApi + 'api/Admin/Categories/Update'),
+            Delete: $resource(appConfig.SkillApi + 'api/Admin/Categories/Delete?id=:id')
 
         };
         function getAll(options) {
             var deferred = $q.defer();
-            debugger;
-            api.getAll.save({request:options.pagging},
+            api.getAll.save({},JSON.stringify(options),
                 function (data){
                     deferred.resolve(data);
                 },
@@ -32,8 +32,8 @@
 
         function postSave(options) {
             var deferred = $q.defer();
-
-            api.postSave.save({id:1,type:2},JSON.stringify(options),
+          //  api.postSave.save({id:1,type:2},JSON.stringify(options),
+            api.postSave.save({},JSON.stringify(options),
                 function (data) {
                     deferred.resolve(data);
                 },
@@ -45,7 +45,18 @@
         }
 
         function Delete(id) {
-            return api.Delete.save({ id: id }).$promise;
+            var deferred = $q.defer();
+            api.Delete.save({
+                id: id
+              }, JSON.stringify([]),
+            function (data) {
+                deferred.resolve(data);
+            },
+            function (data) {
+                deferred.reject(data);
+            }
+          );
+        return deferred.promise;
         }
 
 
