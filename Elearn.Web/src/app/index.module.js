@@ -7,6 +7,8 @@
      */
     angular
         .module('fuse', [
+            //'toastr',
+            //'ui.bootstrap',
 
             // Core
             'app.core',
@@ -26,5 +28,7 @@
             'app.categories',
 
             'app.country'
+
+            
         ]);
 })();

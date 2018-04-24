@@ -4,10 +4,10 @@
 
     angular
         .module('fuse')
-        .controller('MainController', MainController);
+        .controller('MainController', mainController);
 
     /** @ngInject */
-    function MainController($scope, $rootScope)
+    function mainController($scope, $rootScope)
     {
         // Data
 
